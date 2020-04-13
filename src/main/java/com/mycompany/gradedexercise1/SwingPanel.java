@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.gradedexercise1;
 
 import java.awt.Color;
@@ -24,24 +19,18 @@ import java.awt.geom.GeneralPath;
 import java.util.List;
 
 public class SwingPanel extends JPanel implements ActionListener {
-// a SwingPanel is a kind of JPanel
-// and
-// a SwingPanel is a kind of ActionListener
 
     private Shape shape;
     private Color color = Color.red;
     public static Prism prism;
     public static Matrix spinner;
-//    public static Matrix spinnerX;
-//    public static Matrix spinnerY;
-//    public static Matrix spinnerZ;
+    private int timerNum = 25;
     private final Vector illumination;
-//    public static Matrix chosenSpinner;
-//    public static int axisIndex;
+    private final Timer timer;
 
     public SwingPanel() {
-
-        Timer timer = new Timer(30, this);
+        
+        this.timer = new Timer(25, this);
         timer.start();
 
         this.prism = new Prism(0.8, 0.8, 8);
@@ -53,47 +42,25 @@ public class SwingPanel extends JPanel implements ActionListener {
         Matrix c = new Matrix();
         c.rotationZ(Math.PI / 400);
         this.spinner = a.multiply(b).multiply(c);
-
-//        Matrix aX = new Matrix();
-//        aX.rotateX(Math.PI / 400);
-//        this.spinnerX = aX;
-//        System.out.println("spinnerXInSwingPanel: " + spinnerX);
-//
-//        Matrix aY = new Matrix();
-//        aY.rotateY(Math.PI / 400);
-//        this.spinnerY = aY;
-//
-//        Matrix aZ = new Matrix();
-//        aZ.rotationZ(Math.PI / 400);
-//        this.spinnerZ = aZ;
-
-        //axisIndex = 0;
+        
         this.illumination = (new Vector(1.0, 2.0, 3.0)).normalize();
-
-    } // SwingPanel()
+    }
 
     public Color getColor() {
         return this.color;
-    } // getColor()
+    }
 
     public void setColor(Color c) {
         this.color = c;
-    } // setColor( Color )
+    } 
 
-//    public void setAxis(int choice) {
-//        if (choice == 0) {
-//            this.chosenSpinner = this.spinner;
-//        }
-//        if (choice == 1) {
-//            this.chosenSpinner = this.spinnerX;
-//        }
-//        if (choice == 2) {
-//            this.chosenSpinner = this.spinnerY;
-//        }
-//        if (choice == 3) {
-//            this.chosenSpinner = this.spinnerZ;
-//        }
-//    }
+    public void setTimer(int t){
+        this.timerNum = t;
+    }
+    
+    public int getTimer(){
+        return this.timerNum;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -133,29 +100,27 @@ public class SwingPanel extends JPanel implements ActionListener {
                     red = (int) (brightness * c.getRed());
                     green = (int) (brightness * c.getGreen());
                     blue = (int) (brightness * c.getBlue());
-                } // if
+                }
                 else {
                     red = (int) (ambient * c.getRed());
                     green = (int) (ambient * c.getGreen());
                     blue = (int) (ambient * c.getBlue());
-                } // else
+                }
                 Color shade = new Color(red, green, blue);
 
                 g2D.setColor(shade);
                 g2D.fill(s);
-            } // if
-        } // for
-
-    } // paintComponent( Graphics )
+            } 
+        } 
+    }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-
-        //this.prism.setAxis(this.axisIndex);
+        
+        this.timer.setDelay(timerNum);
+        
         this.prism.transform(spinner);
-
+        
         this.repaint();
-    } // actionPerformed( ActionEvent )
-
-} // SwingPanel
-
+    } 
+}

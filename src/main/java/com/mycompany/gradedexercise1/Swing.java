@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.gradedexercise1;
 
 import java.awt.Container;
@@ -14,10 +9,6 @@ import java.util.*;
  *
  * @author katie
  */
-/**
- *
- *
- */
 public class Swing extends JFrame {
 
     private final int FRAME_WIDTH = 512;
@@ -25,23 +16,23 @@ public class Swing extends JFrame {
     private final String FRAME_TITLE = "Swing";
     private final String BG_COLOR = "Background Color";
     private final String FG_COLOR = "Foreground Color";
-    private final String SHAPE = "Number of Sides";
+    private final String SHAPE = "Shape";
     private final String SPINNER = "Axis to Rotate on";
+    private final String SPEED = "Speed";
     private final List<Color> bgPalette = new ArrayList<>();
     private final int NUMBER_OF_COLORS = 5;
-    private int numberOfSides = 5;
+    private int numberOfSides = 7;
     private final List<Color> fgPalette = new ArrayList<>();
     private final SwingPanel panel;
     private final Random rng = new Random();
     private final List<String> bgColorNames = new ArrayList<>(Arrays.asList("Pastel Pink", "Mint", "Pastel Blue", "Pastel Purple", "Pastel Yellow"));
     private final List<String> fgColorNames = new ArrayList<>(Arrays.asList("Turquoise", "Orange", "Maroon", "Sage", "Raspberry"));
-    private final List<String> nameOfNumberOfSides = new ArrayList<>(Arrays.asList("3", "4", "5", "6", "7"));
+    private final List<Integer> numbersOfSides = new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8, 200));
+    private final List<String> shapesList = new ArrayList<>(Arrays.asList("Triangular Prism", "Cube", "Pentagonal Prism", "Hexagonal Prism", "Heptagonal Prism", "Octagonal Prism", "Cylinder"));
     private final List<String> spinnerList = new ArrayList<>(Arrays.asList("All Axes", "X-Axis", "Y-Axis", "Z-Axis"));
+    private final List<String> speedList = new ArrayList<>(Arrays.asList("Slow", "Medium", "Fast"));
+    private final List<Integer> speedListVals = new ArrayList<>(Arrays.asList(100,25,2));
 
-    /**
-     * The Swing class creates the window and the menu as well at its
-     *
-     */
     public Swing() {
 
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -73,6 +64,8 @@ public class Swing extends JFrame {
         this.panel.setBackground(bgPalette.get(randomColor));
 
         Hashtable<String, Color> myDict = new Hashtable<String, Color>();
+        Hashtable<String, Integer> myDictSpeeds = new Hashtable<String, Integer>();
+        Hashtable<String, Integer> shapes = new Hashtable<String, Integer>();
 
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -93,26 +86,11 @@ public class Swing extends JFrame {
 
         JMenu shapeMenu = new JMenu(SHAPE);
         menuBar.add(shapeMenu);
-        MenuListener shapeListener = new MenuListener(MenuListener.SHAPE, this.panel, myDict, this.panel.prism);
+        MenuListener shapeListener = new MenuListener(MenuListener.SHAPE, this.panel, shapes, this.panel.prism);
         for (int i = 0; i < numberOfSides; i++) {
-            makeMenuItem(nameOfNumberOfSides.get(i), shapeListener, shapeMenu);
-
+            makeMenuItem(shapesList.get(i), shapeListener, shapeMenu);
+            shapes.put(shapesList.get(i), numbersOfSides.get(i));
         }
-
-//        JMenu spinnerMenu = new JMenu(SPINNER);
-//        menuBar.add(spinnerMenu);
-//        MenuListenerSpinner spinnerListener0 = new MenuListenerSpinner(0);
-//        makeMenuItemSpinner(spinnerList.get(0), spinnerListener0, spinnerMenu);
-//
-//        MenuListenerSpinner spinnerListener1 = new MenuListenerSpinner(1);
-//        makeMenuItemSpinner(spinnerList.get(1), spinnerListener1, spinnerMenu);
-//
-//        MenuListenerSpinner spinnerListener2 = new MenuListenerSpinner(2);
-//        makeMenuItemSpinner(spinnerList.get(2), spinnerListener2, spinnerMenu);
-//
-//        MenuListenerSpinner spinnerListener3 = new MenuListenerSpinner(3);
-//        makeMenuItemSpinner(spinnerList.get(3), spinnerListener3, spinnerMenu);
-
 
         JMenu spinnerMenu = new JMenu(SPINNER);
         menuBar.add(spinnerMenu);
@@ -128,10 +106,14 @@ public class Swing extends JFrame {
         MenuListener spinnerListener3 = new MenuListener(3, this.panel, myDict, this.panel.prism);
         makeMenuItem(spinnerList.get(3), spinnerListener3, spinnerMenu);
         
+        JMenu speedMenu = new JMenu(SPEED);
+        menuBar.add(speedMenu);
+        MenuListener speedListener = new MenuListener(7, this.panel, myDictSpeeds, this.panel.prism);
+        for (int i = 0; i < 3; i++) {
+            makeMenuItem(speedList.get(i), speedListener, speedMenu);
+            myDictSpeeds.put(speedList.get(i), speedListVals.get(i));
+        }
         
-        
-        
-
         this.setVisible(true);
     }
 
@@ -140,18 +122,9 @@ public class Swing extends JFrame {
         item.addActionListener(listener);
         item.setActionCommand(name);
         menu.add(item);
-    } // makeMenuItem()
-
-//    public final void makeMenuItemSpinner(String name, MenuListenerSpinner listener, JMenu menu) {
-//        JMenuItem item = new JMenuItem(name);
-//        item.addActionListener(listener);
-//        item.setActionCommand(name);
-//        menu.add(item);
-//    }
+    }
 
     public static void main(String[] args) {
         Swing swing = new Swing();
-
     }
-
 }

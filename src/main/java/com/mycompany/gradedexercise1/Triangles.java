@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.gradedexercise1;
 
 import java.awt.Graphics;
@@ -22,7 +17,6 @@ class Triangles {
         this.points.add(a);
         this.points.add(b);
         this.points.add(c);
-
     }
 
     public void transform(Matrix m) {
@@ -32,6 +26,7 @@ class Triangles {
     }
 
     public Shape getShape() {
+        
         GeneralPath path = new GeneralPath();
 
         Vector v = this.points.get(0);
@@ -44,12 +39,12 @@ class Triangles {
             x = v.get(0);
             y = v.get(1);
             path.lineTo(x, y);
-        } // for
+        }
 
         path.closePath();
 
         return path;
-    } // getShape()
+    }
 
     public Vector getNormal() {
         Vector p0 = this.points.get(0);
@@ -62,6 +57,5 @@ class Triangles {
         Vector crossProduct = v0.cross(v1);
 
         return crossProduct.normalize();
-    } // getNormal()
-
+    }
 }

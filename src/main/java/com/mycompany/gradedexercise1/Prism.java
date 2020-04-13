@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.gradedexercise1;
 
 import java.util.ArrayList;
@@ -17,6 +12,7 @@ public class Prism {
     private int numberOfSides;
 
     public Prism(double height, double radius, int sides) {
+        
         this.numberOfSides = sides;
         Vector topCenter = new Vector(0, 0, height / 2);
         Vector bottomCenter = new Vector(0, 0, -height / 2);
@@ -49,7 +45,6 @@ public class Prism {
             Vector p12 = new Vector(topPoints.get((i + 1) % sides).get(0), topPoints.get((i + 1) % sides).get(1), topPoints.get((i + 1) % sides).get(2));
             triangles.add(new Triangles(p10, p11, p12));
         }
-
     }
 
     public ArrayList<Triangles> getFaces() {
@@ -59,7 +54,6 @@ public class Prism {
     public int getSides(){
         return this.numberOfSides;
     }
-        
 
     public void transform(Matrix m) {
         for (Triangles t : triangles) {
@@ -67,4 +61,3 @@ public class Prism {
         }
     }
 }
-
